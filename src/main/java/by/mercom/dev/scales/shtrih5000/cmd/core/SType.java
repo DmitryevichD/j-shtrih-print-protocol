@@ -27,6 +27,18 @@ public class SType {
         value = convertToByte(int_val, countByte);
     }
 
+    public SType(char[] charVal) {
+        value = new byte[charVal.length];
+        for (int i = 0, chVal = charVal.length - 1; i < value.length; i++, chVal--) {
+            value[i] = (byte)charVal[chVal];
+        }
+    }
+
+    public SType(boolean boolVal) {
+        value = new byte[1];
+        value[0] = boolVal ? (byte)1 : (byte)0;
+    }
+
     private byte[] convertToByte(int int_val, int countByte) {
         byte[] result = new byte[countByte];
         for (int i = 0; i < countByte; i++) {
