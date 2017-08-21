@@ -21,14 +21,14 @@ public abstract class Param{
      * См. спецификацию (Приложение 1.)
      */
     public static class KeyCode extends Param{
-        private byte keyCode;
-        public KeyCode(byte keyCode){
+        private SType keyCode;
+        public KeyCode(int keyCode){
             super("Код клавиши");
-            this.keyCode = keyCode;
+            this.keyCode = new SType(keyCode);
         }
 
         public byte[] asByteArray() {
-            return new byte[]{keyCode};
+            return keyCode.asByteArray();
         }
     }
 
@@ -37,13 +37,13 @@ public abstract class Param{
      *  ASCII коды цифр 0..9
      */
     public static class Password extends Param{
-        private byte[] pwd;
-        public Password(String pwd) {
+        private SType pwd;
+        public Password(char[] pwd) {
             super("Пароль администратора");
-            this.pwd = pwd.getBytes();
+            this.pwd = new SType(pwd);
         }
         public byte[] asByteArray() {
-            return pwd;
+            return pwd.asByteArray();
         }
     }
 
@@ -52,15 +52,15 @@ public abstract class Param{
      * Значение (1 байт): 0 – разблокировать, 1 – заблокировать.
      */
     public static class KeyLock extends Param{
-        private boolean isEnabled;
+        private SType lock;
 
         public KeyLock(boolean isEnabled) {
             super("Блокировка / разблокировка клавиатуры");
-            this.isEnabled = isEnabled;
+            lock = new SType(isEnabled);
         }
 
         public byte[] asByteArray() {
-            return isEnabled ? new byte[]{1} : new byte[]{0};
+            return lock.asByteArray();
         }
     }
 }
