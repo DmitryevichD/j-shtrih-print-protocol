@@ -22,9 +22,9 @@ public abstract class Param{
      */
     public static class KeyCode extends Param{
         private SType keyCode;
-        public KeyCode(int keyCode){
+        public KeyCode(ScaleKeyboard keyCode){
             super("Код клавиши");
-            this.keyCode = new SType(keyCode);
+            this.keyCode = keyCode.getCode();
         }
 
         public byte[] asByteArray() {
