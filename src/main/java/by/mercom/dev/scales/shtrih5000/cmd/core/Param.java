@@ -24,7 +24,7 @@ public abstract class Param{
         private SType keyCode;
         public KeyCode(ScaleKeyboard keyCode){
             super("Код клавиши");
-            this.keyCode = keyCode.getCode();
+            this.keyCode = new SType(keyCode.getCode());
         }
 
         public byte[] asByteArray() {

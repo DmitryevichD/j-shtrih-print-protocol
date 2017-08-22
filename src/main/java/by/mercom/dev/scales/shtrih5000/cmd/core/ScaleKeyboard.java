@@ -132,17 +132,15 @@ public enum ScaleKeyboard {
     HOT_KEYS(0x80);
 
     private int code;
-    private SType sType;
     private int hot_key = 1;
 
     private ScaleKeyboard(int code) {
         this.code = code;
-        sType = new SType(code);
     }
 
 
-    public SType getCode(){
-        return code == 0x80 ? new SType(code + hot_key - 1) : sType;
+    public int getCode(){
+        return code == 0x80 ? code + hot_key - 1 : code;
     }
 
     /**
