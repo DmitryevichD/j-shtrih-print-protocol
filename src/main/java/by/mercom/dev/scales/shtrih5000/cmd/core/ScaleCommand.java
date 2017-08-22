@@ -1,32 +1,42 @@
 package by.mercom.dev.scales.shtrih5000.cmd.core;
 
+import by.mercom.dev.scales.shtrih5000.scaleException.IncorrectAnswerException;
 import by.mercom.dev.scales.shtrih5000.scaleException.IncorrectCommandLengthException;
 import org.apache.commons.lang.ArrayUtils;
 
 public abstract class ScaleCommand {
-    private byte cmdCode;
-    private byte cmdSize;
-    private boolean isSyncMode;
+    private SType cmdCode;
+    private SType cmdSize;
+    private boolean isSyncMode = false;
+    private boolean supportSyncMode;
     private String description = null;
     private Param[] params;
 
-    private boolean isSyncMode(){
+    public boolean isSyncMode(){
         return isSyncMode;
     }
     private byte[] paramsAsByteArray(){
         byte[] paramsArray = ArrayUtils.isNotEmpty(params) ? params[0].asByteArray() : null;
 
         for (int i = 1; i < params.length; i++) {
-            ArrayUtils.addAll(paramsArray, params[0].asByteArray());
+            paramsArray = ArrayUtils.addAll(paramsArray, params[i].asByteArray());
         }
         return paramsArray;
     }
 
-    public ScaleCommand(int cmdCode, int cmdSize, Param[] params, boolean isSyncMode){
-        this.cmdCode = (byte)cmdCode;
-        this.cmdSize = (byte)cmdSize;
-        this.isSyncMode = isSyncMode;
+    public ScaleCommand(int cmdCode, int cmdSize, Param[] params, boolean supportSyncMode){
+        this.cmdCode = new SType(cmdCode);
+        this.cmdSize = new SType(cmdSize);
+        this.supportSyncMode = supportSyncMode;
         this.params = params;
+    }
+
+    public void enableSyncMode(){
+        isSyncMode = supportSyncMode;
+    }
+
+    public void disableSyncMode(){
+        isSyncMode = false;
     }
 
     public void setDescription(String description) {
@@ -37,7 +47,7 @@ public abstract class ScaleCommand {
      * @return начальный бит команды согласно спеки
      */
     private byte getCmdMode(){
-        return isSyncMode() ? MODE.SYNC.getCode() : MODE.BROADCAST.getCode();
+        return isSyncMode() ? MODE.SYNC.getCode() : MODE.SIMPLE.getCode();
     }
 
     /**
@@ -45,9 +55,18 @@ public abstract class ScaleCommand {
      * @return
      */
     public byte[] cmdAsByteArray() throws IncorrectCommandLengthException {
-        byte[] result = ArrayUtils.addAll(new byte[]{getCmdMode(), cmdSize, cmdCode}, paramsAsByteArray());
-        if (result.length != cmdSize + 2) {
-            throw new IncorrectCommandLengthException("CMD:" + cmdCode + "current length: " + result.length + 2 + "needed: " + cmdSize + 2);
+        byte[] result = ArrayUtils.addAll(new byte[]{getCmdMode(), cmdSize.asByte(), cmdCode.asByte()}, paramsAsByteArray());
+        if (result.length != cmdSize.asInteger() + 2) {
+            throw new IncorrectCommandLengthException("CMD:" + cmdCode + "current length: " + result.length + 2 + " needed: " + cmdSize + 2);
+        }
+        return result;
+    }
+
+    public int[] cmdAsIntArray() throws IncorrectCommandLengthException {
+        byte[] byteArray = cmdAsByteArray();
+        int[] result = new int[byteArray.length];
+        for (int i = 0; i < byteArray.length; i++) {
+            result[i] = byteArray[i] & 0xFF;
         }
         return result;
     }
@@ -63,7 +82,7 @@ public abstract class ScaleCommand {
      * Определяет начало сообщения и его режим (обычный или режим синхронизации с хостом)
      */
     enum MODE{
-        BROADCAST((byte) 0x02), SYNC((byte) 0x03);
+        SIMPLE((byte) 0x02), SYNC((byte) 0x03);
 
         private byte code;
 
