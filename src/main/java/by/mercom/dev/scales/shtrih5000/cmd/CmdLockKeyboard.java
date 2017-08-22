@@ -6,7 +6,7 @@ import by.mercom.dev.scales.shtrih5000.cmd.core.ScaleCommand;
 public class CmdLockKeyboard extends ScaleCommand {
 
     public CmdLockKeyboard(Param.Password pwd, Param.KeyLock keyLock) {
-        super(0x09, 6, new Param[]{pwd, keyLock}, false);
+        super(0x09, 6, new Param[]{pwd, keyLock}, true);
         setDescription("Блокировка / разблокировка клавиатуры");
     }
 
