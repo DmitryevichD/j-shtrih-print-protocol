@@ -9,7 +9,7 @@ public class SType {
 
     /**
      * Создает массив из одного байта на основании целого числа
-     * @param int_val
+     * @param int_val Целое значение, которое будет конвертировано в byte
      */
     public SType(int int_val){
         this.value = new byte[1];
@@ -29,14 +29,18 @@ public class SType {
 
     public SType(char[] charVal) {
         value = new byte[charVal.length];
-        for (int i = 0, chVal = charVal.length - 1; i < value.length; i++, chVal--) {
-            value[i] = (byte)charVal[chVal];
+        for (int i = 0; i < value.length; i++) {
+            value[i] = (byte)charVal[i];
         }
     }
 
     public SType(boolean boolVal) {
         value = new byte[1];
         value[0] = boolVal ? (byte)1 : (byte)0;
+    }
+
+    public SType(byte[] byteArray) {
+        this.value = byteArray;
     }
 
     private byte[] convertToByte(int int_val, int countByte) {
@@ -50,4 +54,40 @@ public class SType {
     public byte[] asByteArray(){
         return value;
     }
+
+    public int[] asIntArray(){
+        int[] result = new int[value.length];
+        for (int i = 0; i < result.length; i++) {
+            result[i] = value[i] & 0xFF;
+        }
+        return result;
+    }
+
+    public Byte asByte(){
+        return value[0];
+    }
+
+    public Integer asInteger(){
+        int result = 0;
+        for (int i = value.length - 1; i >= 0; i--) {
+            result = result << 8;
+            int tmvInt = value[i] & 0xFF;
+            result = result | tmvInt;
+        }
+        return result;
+    }
+
+    public Character[] asCharArray(){
+        Character[] result = new Character[value.length];
+        for (int i = 0; i < value.length; i++) {
+            result[i] = (char)value[i];
+        }
+        return result;
+    }
+
+     public Boolean asBoolean(){
+        return value[0] == 1;
+     }
+
+
 }
