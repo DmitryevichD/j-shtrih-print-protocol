@@ -37,4 +37,27 @@ public class CmdTest {
         );
         assertArrayEquals(cmd.cmdAsIntArray(), correctCmdDisable);
     }
+
+    @Test
+    public void EnableBroadcastTest() throws Exception{
+        int[] correctCmd = new int[]{0x02, 0x05, 0x0A, 0x30, 0x30, 0x33, 0x30};
+        ScaleCommand cmd = new CmdEnableBroadcast(
+                new Param.Password("0030".toCharArray()));
+        assertArrayEquals(cmd.cmdAsIntArray(), correctCmd);
+    }
+
+    @Test
+    public void DisableBroadcastTest() throws Exception{
+        int[] correctCmd = new int[]{0x02, 0x05, 0x0B, 0x30, 0x30, 0x33, 0x30};
+        ScaleCommand cmd = new CmdDisableBroadcast(
+                new Param.Password("0030".toCharArray()));
+        assertArrayEquals(cmd.cmdAsIntArray(), correctCmd);
+    }
+
+    @Test
+    public void ScaleStatusTest() throws Exception{
+        int[] correctCmd = new int[]{0x02, 0x01, 0x11};
+        ScaleCommand cmd = new CmdScaleStatus();
+        assertArrayEquals(cmd.cmdAsIntArray(), correctCmd);
+    }
 }
