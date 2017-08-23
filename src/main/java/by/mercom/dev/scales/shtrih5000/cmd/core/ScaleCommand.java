@@ -16,9 +16,11 @@ public abstract class ScaleCommand {
         return isSyncMode;
     }
     private byte[] paramsAsByteArray(){
-        byte[] paramsArray = ArrayUtils.isNotEmpty(params) ? params[0].asByteArray() : null;
+        byte[] paramsArray = ArrayUtils.EMPTY_BYTE_ARRAY;
 
-        for (int i = 1; i < params.length; i++) {
+        if(ArrayUtils.isEmpty(params)){return paramsArray;};
+
+        for (int i = 0; i < params.length; i++) {
             paramsArray = ArrayUtils.addAll(paramsArray, params[i].asByteArray());
         }
         return paramsArray;
