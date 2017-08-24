@@ -60,4 +60,55 @@ public class CmdTest {
         ScaleCommand cmd = new CmdScaleStatus();
         assertArrayEquals(cmd.cmdAsIntArray(), correctCmd);
     }
+
+    @Test
+    public void ScaleCurrentModeTest() throws Exception{
+        int[] correctCmd = new int[]{0x02, 0x01, 0x12};
+        ScaleCommand cmd = new CmdScaleCurrentMode();
+        assertArrayEquals(cmd.cmdAsIntArray(), correctCmd);
+    }
+
+    @Test
+    public void ScaleBeepTest() throws Exception{
+        int[] correctCmd = new int[]{0x02, 0x01, 0x13};
+        ScaleCommand cmd = new CmdScaleBeep();
+        assertArrayEquals(cmd.cmdAsIntArray(), correctCmd);
+    }
+
+    @Test
+    public void ScalePasswordChangeTest() throws Exception{
+        int[] correctCmd = new int[]{0x02, 0x09, 0x16, 0x30, 0x30, 0x30, 0x30, 0x30, 0x30, 0x33, 0x30};
+        ScaleCommand cmd = new CmdChangePassword(
+                new Param.Password("0000".toCharArray()),
+                new Param.Password("0030".toCharArray())
+        );
+        assertArrayEquals(cmd.cmdAsIntArray(), correctCmd);
+    }
+
+    @Test
+    public void ScaleSetDefaultTest() throws Exception{
+        int[] correctCmd = new int[]{0x02, 0x05, 0x17, 0x30, 0x30, 0x30, 0x30};
+        ScaleCommand cmd = new CmdSetDefault(
+                new Param.Password("0000".toCharArray())
+                );
+        assertArrayEquals(cmd.cmdAsIntArray(), correctCmd);
+    }
+
+    @Test
+    public void ScaleCleanAllGoodsAndMstTest() throws Exception{
+        int[] correctCmd = new int[]{0x02, 0x05, 0x18, 0x30, 0x30, 0x30, 0x30};
+        ScaleCommand cmd = new CmdCleanAllGoodsAndMsg(
+                new Param.Password("0000".toCharArray())
+        );
+        assertArrayEquals(cmd.cmdAsIntArray(), correctCmd);
+    }
+
+    @Test
+    public void ScaleCleanTotalTest() throws Exception{
+        int[] correctCmd = new int[]{0x02, 0x05, 0x19, 0x30, 0x30, 0x30, 0x30};
+        ScaleCommand cmd = new CmdCleanTotal(
+                new Param.Password("0000".toCharArray())
+        );
+        assertArrayEquals(cmd.cmdAsIntArray(), correctCmd);
+    }
 }
