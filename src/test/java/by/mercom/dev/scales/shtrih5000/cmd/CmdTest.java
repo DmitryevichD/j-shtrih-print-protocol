@@ -6,6 +6,9 @@ import by.mercom.dev.scales.shtrih5000.cmd.core.ScaleCommand;
 import by.mercom.dev.scales.shtrih5000.cmd.core.ScaleKeyboard;
 import org.junit.Test;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import static org.junit.Assert.assertArrayEquals;
 
 public class CmdTest {
@@ -108,6 +111,95 @@ public class CmdTest {
         int[] correctCmd = new int[]{0x02, 0x05, 0x19, 0x30, 0x30, 0x30, 0x30};
         ScaleCommand cmd = new CmdCleanTotal(
                 new Param.Password("0000".toCharArray())
+        );
+        assertArrayEquals(cmd.cmdAsIntArray(), correctCmd);
+    }
+
+    @Test
+    public void ScaleSetDelTest() throws Exception{
+        int[] correctCmd = new int[]{0x02, 0x06, 0x20, 0x30, 0x30, 0x30, 0x30, 0x00};
+        ScaleCommand cmd = new CmdSetScaleDelimPosition(
+                new Param.Password("0000".toCharArray()),
+                new Param.DelimPos(0)
+        );
+        assertArrayEquals(cmd.cmdAsIntArray(), correctCmd);
+
+        correctCmd = new int[]{0x02, 0x06, 0x20, 0x30, 0x30, 0x30, 0x30, 0x01};
+        cmd = new CmdSetScaleDelimPosition(
+                new Param.Password("0000".toCharArray()),
+                new Param.DelimPos(1)
+        );
+        assertArrayEquals(cmd.cmdAsIntArray(), correctCmd);
+
+        correctCmd = new int[]{0x02, 0x06, 0x20, 0x30, 0x30, 0x30, 0x30, 0x02};
+        cmd = new CmdSetScaleDelimPosition(
+                new Param.Password("0000".toCharArray()),
+                new Param.DelimPos(2)
+        );
+        assertArrayEquals(cmd.cmdAsIntArray(), correctCmd);
+    }
+
+    @Test
+    public void ScaleSetDateFormatTest() throws Exception{
+        int[] correctCmd = new int[]{0x02, 0x06, 0x24, 0x30, 0x30, 0x30, 0x30, 0x00};
+        ScaleCommand cmd = new CmdSetScaleDateFormat(
+                new Param.Password("0000".toCharArray()),
+                new Param.DateFormat("DDMMYY")
+        );
+        assertArrayEquals(cmd.cmdAsIntArray(), correctCmd);
+
+        correctCmd = new int[]{0x02, 0x06, 0x24, 0x30, 0x30, 0x30, 0x30, 0x01};
+        cmd = new CmdSetScaleDateFormat(
+                new Param.Password("0000".toCharArray()),
+                new Param.DateFormat("YYMMDD")
+        );
+        assertArrayEquals(cmd.cmdAsIntArray(), correctCmd);
+
+        correctCmd = new int[]{0x02, 0x06, 0x24, 0x30, 0x30, 0x30, 0x30, 0x02};
+        cmd = new CmdSetScaleDateFormat(
+                new Param.Password("0000".toCharArray()),
+                new Param.DateFormat("MMDDYY")
+        );
+        assertArrayEquals(cmd.cmdAsIntArray(), correctCmd);
+    }
+
+    @Test
+    public void ScaleSetTimeFormatTest() throws Exception{
+        int[] correctCmd = new int[]{0x02, 0x06, 0x23, 0x30, 0x30, 0x30, 0x30, 0x00};
+        ScaleCommand cmd = new CmdSetScaleTimeFormat(
+                new Param.Password("0000".toCharArray()),
+                new Param.TimeFormat(true)
+        );
+        assertArrayEquals(cmd.cmdAsIntArray(), correctCmd);
+
+        correctCmd = new int[]{0x02, 0x06, 0x23, 0x30, 0x30, 0x30, 0x30, 0x01};
+        cmd = new CmdSetScaleTimeFormat(
+                new Param.Password("0000".toCharArray()),
+                new Param.TimeFormat(false)
+        );
+        assertArrayEquals(cmd.cmdAsIntArray(), correctCmd);
+    }
+
+    @Test
+    public void ScaleSetTimeTest() throws Exception{
+        int[] correctCmd = new int[]{0x02, 0x08, 0x21, 0x30, 0x30, 0x30, 0x30, 0x01, 0x02, 0x03};
+        SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd hh:mm:ss");
+        Date dt = sdf.parse("17-08-12 01:02:03");
+        ScaleCommand cmd = new CmdSetScaleTime(
+                new Param.Password("0000".toCharArray()),
+                new Param.ScaleTime(dt.getTime())
+        );
+        assertArrayEquals(cmd.cmdAsIntArray(), correctCmd);
+    }
+
+    @Test
+    public void ScaleSetDateTest() throws Exception{
+        int[] correctCmd = new int[]{0x02, 0x08, 0x22, 0x30, 0x30, 0x30, 0x30, 0x0C, 0x08, 0x11};
+        SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd hh:mm:ss");
+        Date dt = sdf.parse("17-08-12 01:01:01");
+        ScaleCommand cmd = new CmdSetScaleDate(
+                new Param.Password("0000".toCharArray()),
+                new Param.ScaleDate(dt)
         );
         assertArrayEquals(cmd.cmdAsIntArray(), correctCmd);
     }
