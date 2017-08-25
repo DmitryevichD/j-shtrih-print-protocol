@@ -1,5 +1,9 @@
 package by.mercom.dev.scales.shtrih5000.cmd.core;
 
+import java.sql.Time;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * Данный класс представляет собой инструмент для создания и преобразования различных базовых классов java
  * в массив байтов, совместимых с протоколом Штрих-принт
@@ -32,6 +36,32 @@ public class SType {
         for (int i = 0; i < value.length; i++) {
             value[i] = (byte)charVal[i];
         }
+    }
+
+
+
+    public SType(Date date) {
+        String strDate = getDate(date);
+        String[] dateArray = strDate.split(" ")[0].split("-");
+        int year = Integer.parseInt(dateArray[0]);
+        int month = Integer.parseInt(dateArray[1]);
+        int day = Integer.parseInt(dateArray[2]);
+        value = new byte[3];
+        value[0] = (byte)day;
+        value[1] = (byte)month;
+        value[2] = (byte)year;
+    }
+
+    public SType(long time) {
+        String strDate = getDate(new Date(time));
+        String[] dateArray = strDate.split(" ")[1].split(":");
+        int hour = Integer.parseInt(dateArray[0]);
+        int min = Integer.parseInt(dateArray[1]);
+        int sec = Integer.parseInt(dateArray[2]);
+        value = new byte[3];
+        value[0] = (byte)hour;
+        value[1] = (byte)min;
+        value[2] = (byte)sec;
     }
 
     public SType(boolean boolVal) {
@@ -89,5 +119,8 @@ public class SType {
         return value[0] == 1;
      }
 
-
+    private String getDate(Date dt) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-dd hh:mm:ss");
+        return sdf.format(dt);
+    }
 }
