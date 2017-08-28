@@ -4,7 +4,7 @@ import by.mercom.dev.scales.shtrih5000.cmd.core.Param;
 import by.mercom.dev.scales.shtrih5000.cmd.core.ScaleCommand;
 
 /**
- * Изменение пароля администратора
+ * Указывает новый пароль для доступа к системному меню и связи по интерфейсу.
  */
 public class CmdChangePassword extends ScaleCommand{
 

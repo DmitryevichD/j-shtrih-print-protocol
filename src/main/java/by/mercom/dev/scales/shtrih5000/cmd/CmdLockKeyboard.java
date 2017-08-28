@@ -3,10 +3,12 @@ package by.mercom.dev.scales.shtrih5000.cmd;
 import by.mercom.dev.scales.shtrih5000.cmd.core.Param;
 import by.mercom.dev.scales.shtrih5000.cmd.core.ScaleCommand;
 
+/**
+ * Производит блокировку или разблокировку клавиатуры
+ */
 public class CmdLockKeyboard extends ScaleCommand {
 
     /**
-     * Блокировка / разблокировка клавиатуры
      * @param pwd Пароль администратора
      * @param keyLock Признак ключения/отключения блокировки
      */

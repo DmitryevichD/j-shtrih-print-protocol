@@ -3,11 +3,12 @@ package by.mercom.dev.scales.shtrih5000.cmd;
 import by.mercom.dev.scales.shtrih5000.cmd.core.Param;
 import by.mercom.dev.scales.shtrih5000.cmd.core.ScaleCommand;
 
-
+/**
+ * Эмулирует нажатие клавиши на клавиатуре
+ */
 public class CmdEmulKeyboard extends ScaleCommand {
 
     /**
-     * Команда эмуляции клавиатуры
      * @param pwd Пароль администратора
      * @param keyCode Код клавиатуры
      */

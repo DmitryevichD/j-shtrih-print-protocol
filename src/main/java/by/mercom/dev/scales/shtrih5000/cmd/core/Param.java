@@ -84,15 +84,16 @@ public abstract class Param{
 
     /**
      * Запись номера весов
+     * Внимение. Берется младший байт типа integer
      */
-    public static class Number extends Param{
-        public Number(int number) {
-            super(new SType(number), "Запись номера весов");
+    public static class ScaleNumber extends Param {
+        public ScaleNumber(int scaleNumber) throws IncorrectParamValue{
+            super(new SType(scaleNumber), "Запись номера весов");
         }
     }
 
     /**
-     * Формат отображения даты (1 байт), диапазон: 0 – ДД ММ ГГ, 1 – ГГ ММ ДД, 2 – ММ ДД ГГ.
+     * Формат отображения даты
      */
     public static class DateFormat extends Param {
         /**
@@ -148,15 +149,38 @@ public abstract class Param{
     }
 
     /**
-     * Режим печати (1 байт), диапазон: 0 – нет, 1 – разрешена, 2 - автопечать
+     * Устанавливает режим печати
      */
     public static class PrintMode extends Param{
+        /**
+         *
+         * @param printMode 0 – нет, 1 – разрешена, 2 - автопечать
+         * @throws IncorrectParamValue - неверное значение параметра
+         */
         public PrintMode(int printMode) throws IncorrectParamValue {
             super("Режим печати");
             if (printMode >= 0 || printMode <= 3) {
                 super.setParam(new SType(printMode));
             }else {
-                new IncorrectParamValue("PrintMode. Current value=" + printMode + ", must be 0..2");
+                new IncorrectParamValue("WeightLimit. Current value=" + printMode + ", must be 0..2");
+            }
+        }
+    }
+
+    /**
+     * Содержит сведения о наибольшем пределе взвешивания весов, в граммах.
+     */
+    public static class WeightLimit extends Param {
+        /**
+         * Предел взвешивания в граммах
+         * @param weight о 1 грамма до 65535г
+         */
+        public WeightLimit(int weight) throws IncorrectParamValue{
+            super("Предел взвешивания");
+            if (weight >= 0 || weight <= 65535) {
+                super.setParam(new SType(weight, 2));
+            }else {
+                throw new IncorrectParamValue("WeightLimit.Current value=" + weight + ", must be 1..65535");
             }
         }
     }

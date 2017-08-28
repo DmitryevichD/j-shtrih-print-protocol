@@ -4,12 +4,11 @@ import by.mercom.dev.scales.shtrih5000.cmd.core.Param;
 import by.mercom.dev.scales.shtrih5000.cmd.core.ScaleCommand;
 
 /**
- * Изменение режима печати
+ * Команда изменения режима печати
  */
 public class CmdSetPrintMode extends ScaleCommand{
 
     /**
-     * Создает комманду Изменения режима печати
      * @param pwd - Пароль администратора
      * @param printMode Режим печати
      */

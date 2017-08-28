@@ -1,10 +1,9 @@
 package by.mercom.dev.scales.shtrih5000.cmd;
 
-import by.mercom.dev.scales.shtrih5000.cmd.core.Param;
 import by.mercom.dev.scales.shtrih5000.cmd.core.ScaleCommand;
 
 /**
- * Гудок
+ * Выдает звуковой сигнал.
  */
 public class CmdScaleBeep extends ScaleCommand{
 
