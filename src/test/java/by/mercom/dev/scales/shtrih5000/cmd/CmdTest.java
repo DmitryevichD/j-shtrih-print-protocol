@@ -119,21 +119,21 @@ public class CmdTest {
     @Test
     public void ScaleSetDelTest() throws Exception{
         int[] correctCmd = new int[]{0x02, 0x06, 0x20, 0x30, 0x30, 0x30, 0x30, 0x00};
-        ScaleCommand cmd = new CmdSetScaleDelimPosition(
+        ScaleCommand cmd = new CmdSetPointPosition(
                 new Param.Password("0000".toCharArray()),
                 new Param.DelimPos(0)
         );
         assertArrayEquals(cmd.cmdAsIntArray(), correctCmd);
 
         correctCmd = new int[]{0x02, 0x06, 0x20, 0x30, 0x30, 0x30, 0x30, 0x01};
-        cmd = new CmdSetScaleDelimPosition(
+        cmd = new CmdSetPointPosition(
                 new Param.Password("0000".toCharArray()),
                 new Param.DelimPos(1)
         );
         assertArrayEquals(cmd.cmdAsIntArray(), correctCmd);
 
         correctCmd = new int[]{0x02, 0x06, 0x20, 0x30, 0x30, 0x30, 0x30, 0x02};
-        cmd = new CmdSetScaleDelimPosition(
+        cmd = new CmdSetPointPosition(
                 new Param.Password("0000".toCharArray()),
                 new Param.DelimPos(2)
         );
@@ -230,6 +230,16 @@ public class CmdTest {
         cmd = new CmdSetPrintMode(
                 new Param.Password("0000".toCharArray()),
                 new Param.PrintMode(2)
+        );
+        assertArrayEquals(cmd.cmdAsIntArray(), correctCmd);
+    }
+
+    @Test
+    public void ScaleSetAutoPrintWeightTest() throws Exception{
+        int[] correctCmd = new int[]{0x02, 0x07, 0x28, 0x30, 0x30, 0x30, 0x30, 0x19, 0x00};
+        ScaleCommand cmd = new CmdSetAutoPrintWeight(
+                new Param.Password("0000".toCharArray()),
+                new Param.WeightLimit(25)
         );
         assertArrayEquals(cmd.cmdAsIntArray(), correctCmd);
     }
