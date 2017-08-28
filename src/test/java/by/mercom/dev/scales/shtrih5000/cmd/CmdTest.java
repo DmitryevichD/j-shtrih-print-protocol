@@ -243,4 +243,21 @@ public class CmdTest {
         );
         assertArrayEquals(cmd.cmdAsIntArray(), correctCmd);
     }
+
+    @Test
+    public void ScaleSetPackagingModeTest() throws Exception{
+        int[] correctCmd = new int[]{0x02, 0x06, 0x29, 0x30, 0x30, 0x30, 0x30, 0x00};
+        ScaleCommand cmd = new CmdSetPackagingMode(
+                new Param.Password("0000".toCharArray()),
+                new Param.PackMode(false)
+        );
+        assertArrayEquals(cmd.cmdAsIntArray(), correctCmd);
+
+        correctCmd = new int[]{0x02, 0x06, 0x29, 0x30, 0x30, 0x30, 0x30, 0x01};
+        cmd = new CmdSetPackagingMode(
+                new Param.Password("0000".toCharArray()),
+                new Param.PackMode(true)
+        );
+        assertArrayEquals(cmd.cmdAsIntArray(), correctCmd);
+    }
 }

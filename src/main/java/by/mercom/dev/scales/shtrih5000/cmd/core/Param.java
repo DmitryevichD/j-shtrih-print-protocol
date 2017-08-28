@@ -59,8 +59,6 @@ public abstract class Param{
      * Значение (1 байт): 0 – разблокировать, 1 – заблокировать.
      */
     public static class KeyLock extends Param{
-        private SType lock;
-
         public KeyLock(boolean isEnabled) {
             super(new SType(isEnabled), "Блокировка / разблокировка клавиатуры");
         }
@@ -182,6 +180,15 @@ public abstract class Param{
             }else {
                 throw new IncorrectParamValue("WeightLimit.Current value=" + weight + ", must be 1..65535");
             }
+        }
+    }
+
+    /**
+     * Режим фaсовки на весах вкл/выкл.
+     */
+    public static class PackMode extends Param{
+        public PackMode(boolean isEnable) {
+            super(new SType(isEnable), "Режим фaсовки на весах");
         }
     }
 }
