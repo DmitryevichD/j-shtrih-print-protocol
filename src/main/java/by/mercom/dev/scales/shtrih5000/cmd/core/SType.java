@@ -32,6 +32,7 @@ public class SType {
     }
 
     public SType(char[] charVal) {
+        charVal = charVal == null ? new char[]{'0', '0', '0', '0'} : charVal;
         value = new byte[charVal.length];
         for (int i = 0; i < value.length; i++) {
             value[i] = (byte)charVal[i];
@@ -41,6 +42,7 @@ public class SType {
 
 
     public SType(Date date) {
+        date = date == null ? new Date() : date;
         String strDate = getDate(date);
         String[] dateArray = strDate.split(" ")[0].split("-");
         int year = Integer.parseInt(dateArray[0]);
@@ -70,7 +72,7 @@ public class SType {
     }
 
     public SType(byte[] byteArray) {
-        this.value = byteArray;
+        this.value = byteArray == null ? new byte[]{0} : byteArray;
     }
 
     private byte[] convertToByte(int int_val, int countByte) {

@@ -1,6 +1,9 @@
 package by.mercom.dev.scales.shtrih5000.cmd.core;
 
+import by.mercom.dev.scales.shtrih5000.scaleException.IncorrectParamValue;
+
 import javax.swing.text.Style;
+import java.security.InvalidParameterException;
 import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -69,12 +72,13 @@ public abstract class Param{
     public static class DelimPos extends Param{
         private SType position;
 
-        public DelimPos(int position){
+        public DelimPos(int position) throws IncorrectParamValue{
             super("Запись положения десятичной точки");
-            if (position < 0 || position > 3){
-                position = 0;
+            if (position >= 0 || position <= 3) {
+                super.setParam(new SType(position));
+            }else {
+                throw new IncorrectParamValue("DelimPos.Current value=" + position + ", must be 0..3");
             }
-            super.setParam(new SType(position));
         }
     }
 
@@ -94,14 +98,16 @@ public abstract class Param{
         /**
          * @param tmplt DDMMYY, YYMMDD, MMDDYY
          */
-        public DateFormat(String tmplt) {
+        public DateFormat(String tmplt) throws IncorrectParamValue{
             super("Формат отображения даты");
             if(tmplt.equals("YYMMDD")){
                 super.setParam(new SType(1));
             }else if(tmplt.equals("MMDDYY")){
                 super.setParam((new SType(2)));
-            }else{
+            }else if(tmplt.equals("DDMMYY")){
                 super.setParam(new SType(0));
+            }else {
+                throw new IncorrectParamValue("DateFormat. Current value=" + tmplt + ", must be  YYMMDD or MMDDYY or DDMMYY");
             }
         }
     }
@@ -138,6 +144,20 @@ public abstract class Param{
     public static class ScaleTime extends Param{
         public ScaleTime(long time) {
             super(new SType(time), "Программирование времени");
+        }
+    }
+
+    /**
+     * Режим печати (1 байт), диапазон: 0 – нет, 1 – разрешена, 2 - автопечать
+     */
+    public static class PrintMode extends Param{
+        public PrintMode(int printMode) throws IncorrectParamValue {
+            super("Режим печати");
+            if (printMode >= 0 || printMode <= 3) {
+                super.setParam(new SType(printMode));
+            }else {
+                new IncorrectParamValue("PrintMode. Current value=" + printMode + ", must be 0..2");
+            }
         }
     }
 }

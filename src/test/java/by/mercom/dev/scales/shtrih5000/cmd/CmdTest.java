@@ -4,6 +4,7 @@ package by.mercom.dev.scales.shtrih5000.cmd;
 import by.mercom.dev.scales.shtrih5000.cmd.core.Param;
 import by.mercom.dev.scales.shtrih5000.cmd.core.ScaleCommand;
 import by.mercom.dev.scales.shtrih5000.cmd.core.ScaleKeyboard;
+import by.mercom.dev.scales.shtrih5000.scaleException.IncorrectParamValue;
 import org.junit.Test;
 
 import java.text.SimpleDateFormat;
@@ -139,7 +140,7 @@ public class CmdTest {
         assertArrayEquals(cmd.cmdAsIntArray(), correctCmd);
     }
 
-    @Test
+    @Test(expected = IncorrectParamValue.class)
     public void ScaleSetDateFormatTest() throws Exception{
         int[] correctCmd = new int[]{0x02, 0x06, 0x24, 0x30, 0x30, 0x30, 0x30, 0x00};
         ScaleCommand cmd = new CmdSetScaleDateFormat(
@@ -161,6 +162,11 @@ public class CmdTest {
                 new Param.DateFormat("MMDDYY")
         );
         assertArrayEquals(cmd.cmdAsIntArray(), correctCmd);
+
+        cmd = new CmdSetScaleDateFormat(
+                new Param.Password("0000".toCharArray()),
+                new Param.DateFormat("RWCSDF")
+        );
     }
 
     @Test
@@ -200,6 +206,30 @@ public class CmdTest {
         ScaleCommand cmd = new CmdSetScaleDate(
                 new Param.Password("0000".toCharArray()),
                 new Param.ScaleDate(dt)
+        );
+        assertArrayEquals(cmd.cmdAsIntArray(), correctCmd);
+    }
+
+    @Test
+    public void ScaleSetPrintModeTest() throws Exception{
+        int[] correctCmd = new int[]{0x02, 0x06, 0x27, 0x30, 0x30, 0x30, 0x30, 0x00};
+        ScaleCommand cmd = new CmdSetPrintMode(
+                new Param.Password("0000".toCharArray()),
+                new Param.PrintMode(0)
+        );
+        assertArrayEquals(cmd.cmdAsIntArray(), correctCmd);
+
+        correctCmd = new int[]{0x02, 0x06, 0x27, 0x30, 0x30, 0x30, 0x30, 0x01};
+        cmd = new CmdSetPrintMode(
+                new Param.Password("0000".toCharArray()),
+                new Param.PrintMode(1)
+        );
+        assertArrayEquals(cmd.cmdAsIntArray(), correctCmd);
+
+        correctCmd = new int[]{0x02, 0x06, 0x27, 0x30, 0x30, 0x30, 0x30, 0x02};
+        cmd = new CmdSetPrintMode(
+                new Param.Password("0000".toCharArray()),
+                new Param.PrintMode(2)
         );
         assertArrayEquals(cmd.cmdAsIntArray(), correctCmd);
     }
