@@ -191,4 +191,13 @@ public abstract class Param{
             super(new SType(isEnable), "Режим фaсовки на весах");
         }
     }
+
+    /**
+     * Режим фaсовки на весах вкл/выкл.
+     */
+    public static class BeepMode extends Param {
+        public BeepMode(boolean isEnable){
+            super(new SType(isEnable), "Режим работы звука");
+        }
+    }
 }

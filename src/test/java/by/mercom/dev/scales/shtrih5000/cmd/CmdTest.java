@@ -260,4 +260,21 @@ public class CmdTest {
         );
         assertArrayEquals(cmd.cmdAsIntArray(), correctCmd);
     }
+
+    @Test
+    public void ScaleSetSoundModeTest() throws Exception{
+        int[] correctCmd = new int[]{0x02, 0x06, 0x2A, 0x30, 0x30, 0x30, 0x30, 0x01};
+        ScaleCommand cmd = new CmdSetSoundMode(
+                new Param.Password("0000".toCharArray()),
+                new Param.BeepMode(true)
+        );
+        assertArrayEquals("Sound mode is enable",cmd.cmdAsIntArray(), correctCmd);
+
+        correctCmd = new int[]{0x02, 0x06, 0x2A, 0x30, 0x30, 0x30, 0x30, 0x00};
+        cmd = new CmdSetSoundMode(
+                new Param.Password("0000".toCharArray()),
+                new Param.BeepMode(false)
+        );
+        assertArrayEquals("Sound mode is disable",cmd.cmdAsIntArray(), correctCmd);
+    }
 }
