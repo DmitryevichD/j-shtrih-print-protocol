@@ -3,16 +3,14 @@ package by.mercom.dev.scales.shtrih5000.cmd.core;
 import org.apache.commons.lang.ArrayUtils;
 import org.junit.Test;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 
 public class STypeTest {
+
     @Test
     public void convertToByteTest() throws Exception {
         Map<Integer, Byte> testMap0 = new HashMap<Integer, Byte>();
@@ -71,6 +69,24 @@ public class STypeTest {
         }
         SType sType = new SType(byteArray);
         assertArrayEquals(sType.asIntArray(), arrayInteger);
+    }
+
+    @Test
+    public void convertFloatToByteArrayTest() throws Exception{
+        Map<Float, Byte[]> answers = new HashMap<Float, Byte[]>();
+        answers.put(1.23f, new Byte[]{(byte)0xA4, (byte)0x70, (byte)0x9D, (byte)0x3F});
+        answers.put(999999f, new Byte[]{(byte)0xF0, (byte)0x23, (byte)0x74, (byte)0x49});
+        answers.put(99999.9f, new Byte[]{(byte)0xF3, (byte)0x4F, (byte)0xC3, (byte)0x47});
+        answers.put(9999.99f, new Byte[]{(byte)0xF6, (byte)0x3F, (byte)0x1C, (byte)0x46});
+        answers.put(8.38f, new Byte[]{(byte)0x7B, (byte)0x14, (byte)0x06, (byte)0x41});
+        answers.put(23.75f, new Byte[]{(byte)0, (byte)0, (byte)0xBE, (byte)0x41});
+        answers.put(153.89f, new Byte[]{(byte)0xD7, (byte)0xE3, (byte)0x19, (byte)0x43});
+        answers.put(1f, new Byte[]{0, 0, (byte)0x80, (byte)0x3F});
+        answers.put(0f, new Byte[]{0, 0, 0, 0});
+
+        for (Map.Entry<Float, Byte[]> answer : answers.entrySet()) {
+            assertArrayEquals("Invalid convert " + answer.getKey(), ArrayUtils.toPrimitive(answer.getValue()), new SType(answer.getKey()).asByteArray());
+        }
     }
 
 }
