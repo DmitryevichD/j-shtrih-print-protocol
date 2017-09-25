@@ -233,4 +233,13 @@ public abstract class Param{
             }
         }
     }
+
+    /**
+     * Тара (2 байта), в г, диапазон: 0..НПВ/10
+     */
+    public static class Tare extends Param{
+        public Tare(int tare){
+            super(new SType(tare, 2), "Задать тару");
+        }
+    }
 }
