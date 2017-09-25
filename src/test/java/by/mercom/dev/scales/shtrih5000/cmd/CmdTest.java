@@ -322,9 +322,9 @@ public class CmdTest {
     }
 
     @Test
-    public void ScaleSetTareTest() throws Exception{
+    public void ScaleSetTareToZeroTest() throws Exception{
         int[] correctCmd = new int[]{0x02, 0x05, 0x31, 0x30, 0x30, 0x30, 0x30};
-        ScaleCommand cmd = new CmdSetScaleTare(
+        ScaleCommand cmd = new CmdSetScaleTareToZero(
                 new Param.Password("0000".toCharArray()));
         assertArrayEquals("set tare",cmd.cmdAsIntArray(), correctCmd);
     }
