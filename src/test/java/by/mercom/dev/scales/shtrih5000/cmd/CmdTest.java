@@ -312,4 +312,21 @@ public class CmdTest {
         );
         assertArrayEquals("set plu access by code of goods",cmd.cmdAsIntArray(), correctCmd);
     }
+
+    @Test
+    public void ScaleSetZeroTest() throws Exception{
+        int[] correctCmd = new int[]{0x02, 0x05, 0x30, 0x30, 0x30, 0x30, 0x30};
+        ScaleCommand cmd = new CmdSetScaleZero(
+                new Param.Password("0000".toCharArray()));
+        assertArrayEquals("set zero",cmd.cmdAsIntArray(), correctCmd);
+    }
+
+    @Test
+    public void ScaleSetTareTest() throws Exception{
+        int[] correctCmd = new int[]{0x02, 0x05, 0x31, 0x30, 0x30, 0x30, 0x30};
+        ScaleCommand cmd = new CmdSetScaleTare(
+                new Param.Password("0000".toCharArray()));
+        assertArrayEquals("set tare",cmd.cmdAsIntArray(), correctCmd);
+    }
+
 }
