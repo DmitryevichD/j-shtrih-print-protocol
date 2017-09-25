@@ -1,5 +1,7 @@
 package by.mercom.dev.scales.shtrih5000.cmd.core;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -39,6 +41,11 @@ public class SType {
         }
     }
 
+    public SType(float floatValue){
+       //round
+        float roundFloat = new BigDecimal(floatValue).setScale(2, RoundingMode.HALF_UP).floatValue();
+        value = convertToByte(Float.floatToIntBits(roundFloat), 4);
+    }
 
 
     public SType(Date date) {
