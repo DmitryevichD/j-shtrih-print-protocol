@@ -277,4 +277,39 @@ public class CmdTest {
         );
         assertArrayEquals("Sound mode is disable",cmd.cmdAsIntArray(), correctCmd);
     }
+
+    @Test
+    public void ScaleSetCourceTest() throws Exception{
+        int[] correctCmd = new int[]{0x02, 0x09, 0x2B, 0x30, 0x30, 0x30, 0x30, 0x52, 0xB8, 0xBA, 0x41};
+        ScaleCommand cmd = new CmdSetCurrencyCource(
+                new Param.Password("0000".toCharArray()),
+                new Param.Cource(23.34f)
+        );
+        assertArrayEquals("check cource",cmd.cmdAsIntArray(), correctCmd);
+    }
+
+    @Test
+    public void ScaleGetPLUAccessTest() throws Exception{
+        int[] correctCmd = new int[]{0x02, 0x05, 0x2C, 0x30, 0x30, 0x30, 0x30};
+        ScaleCommand cmd = new CmdGetScalePLUAccess(
+                new Param.Password("0000".toCharArray()));
+        assertArrayEquals("plu get access",cmd.cmdAsIntArray(), correctCmd);
+    }
+
+    @Test
+    public void ScaleSetPLUAccessTest() throws Exception{
+        int[] correctCmd = new int[]{0x02, 0x06, 0x2F, 0x30, 0x30, 0x30, 0x30, 0x0};
+        ScaleCommand cmd = new CmdSetScalePLUAccess(
+                new Param.Password("0000".toCharArray()),
+                new Param.PLUAccess(0)
+        );
+        assertArrayEquals("set plu access by number plus",cmd.cmdAsIntArray(), correctCmd);
+
+        correctCmd = new int[]{0x02, 0x06, 0x2F, 0x30, 0x30, 0x30, 0x30, 0x1};
+        cmd = new CmdSetScalePLUAccess(
+                new Param.Password("0000".toCharArray()),
+                new Param.PLUAccess(1)
+        );
+        assertArrayEquals("set plu access by code of goods",cmd.cmdAsIntArray(), correctCmd);
+    }
 }

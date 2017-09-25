@@ -200,4 +200,37 @@ public abstract class Param{
             super(new SType(isEnable), "Режим работы звука");
         }
     }
+
+    /**
+     * Курс валюты (4 байта, дробное), диапазон:
+     1. 0..999999 (положение десятичной точки = 0)
+     2. 0..99999.9 (положение десятичной точки = 1)
+     3. 0..9999.99 (положение десятичной точки = 2)
+     */
+    public static class Cource extends Param {
+        public Cource(float cource) throws IncorrectParamValue {
+            super("Курс валюты");
+            if (cource >= 0 || cource <= 999999f) {
+                super.setParam(new SType(cource));
+            }else
+                throw new IncorrectParamValue("Cource value=" + cource + ", must be 0..999999");
+
+        }
+    }
+
+    /**
+     * Настройка доступа к ПЛУ (1 байт), диапазон:
+     * 0 – доступ по номеру
+     * 1 – доступ по коду товара
+     */
+    public static class PLUAccess extends Param {
+        public PLUAccess(int access) throws IncorrectParamValue{
+            super("Настройка доступа к ПЛУ");
+            if (access == 0 || access == 1) {
+                super.setParam(new SType(access));
+            }else {
+                new IncorrectParamValue("PLU access " + access + ", must be 0 or 1");
+            }
+        }
+    }
 }
