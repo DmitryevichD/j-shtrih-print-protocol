@@ -206,7 +206,7 @@ public abstract class Param{
     public static class Cource extends Param {
         public Cource(float cource) throws IncorrectParamValue {
             super("Курс валюты");
-            if (cource >= 0 || cource <= 999999f) {
+            if (cource >= 0 && cource <= 999999f) {
                 super.setParam(new SType(cource));
             }else
                 throw new IncorrectParamValue("Cource value=" + cource + ", must be 0..999999");
@@ -220,12 +220,14 @@ public abstract class Param{
      * 1 – доступ по коду товара
      */
     public static class PLUAccess extends Param {
+        private final int minVal = 0;
+        private final int maxVal = 1;
         public PLUAccess(int access) throws IncorrectParamValue{
             super("Настройка доступа к ПЛУ");
-            if (access == 0 || access == 1) {
+            if (access >= minVal && access <= maxVal) {
                 super.setParam(new SType(access));
             }else {
-                new IncorrectParamValue("PLU access " + access + ", must be 0 or 1");
+                throw new IncorrectParamValue("PLU access " + access + ", must be 0 or 1");
             }
         }
     }
@@ -248,10 +250,10 @@ public abstract class Param{
 
         public Price(int price) throws IncorrectParamValue{
             super("Установить цену");
-            if(price >= minVal || price <= maxVal){
+            if(price >= minVal && price <= maxVal){
                 super.setParam(new SType(price, 4));
             }else {
-                new IncorrectParamValue("Price value " + price + ", must be " + minVal + ".." + maxVal);
+                throw new IncorrectParamValue("Price value " + price + ", must be " + minVal + ".." + maxVal);
             }
         }
     }
@@ -265,10 +267,32 @@ public abstract class Param{
 
         public Quantity(int quantity) throws IncorrectParamValue{
             super("Установить количество");
-            if(quantity >= minVal || quantity <= maxVal){
+            if(quantity >= minVal && quantity <= maxVal){
                 super.setParam(new SType(quantity, 1));
             }else {
-                new IncorrectParamValue("Price value " + quantity + ", must be " + minVal + ".." + maxVal);
+                throw new IncorrectParamValue("Quantity value " + quantity + ", must be " + minVal + ".." + maxVal);
+            }
+        }
+    }
+
+    /**
+     * Тип товара (1 байт), диапазон:
+     */
+    public static class GoodsType extends Param{
+        private final int minVal = 0;
+        private final int maxVal = 1;
+
+        /**
+         *
+         * @param goodsType 0 – весовой, 1 - штучный
+         * @throws IncorrectParamValue
+         */
+        public GoodsType(int goodsType) throws IncorrectParamValue{
+            super("Установить тип товара");
+            if(goodsType >= minVal && goodsType <= maxVal){
+                super.setParam(new SType(goodsType, 1));
+            }else {
+                throw new IncorrectParamValue("Goods type value " + goodsType + ", must be " + minVal + ".." + maxVal);
             }
         }
     }

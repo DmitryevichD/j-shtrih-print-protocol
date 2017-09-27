@@ -11,6 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertTrue;
 
 public class CmdTest {
 
@@ -344,6 +345,13 @@ public class CmdTest {
                 new Param.Price(999999)
         );
         assertArrayEquals("set price",cmd.cmdAsIntArray(), correctCmd);
+
+        try {
+            new Param.Price(-23);
+            assertTrue("must be exception", false);
+        } catch (IncorrectParamValue ex) {
+            assertTrue(true);
+        }
     }
 
     @Test
@@ -354,6 +362,36 @@ public class CmdTest {
                 new Param.Quantity(32)
         );
         assertArrayEquals("set quantity",cmd.cmdAsIntArray(), correctCmd);
+
+        try {
+            new Param.Quantity(-23);
+            assertTrue("must be exception", false);
+        } catch (IncorrectParamValue ex) {
+            assertTrue(true);
+        }
     }
 
+    @Test
+    public void ScaleSetGoodsTypeTest() throws Exception{
+        int[] correctCmd = new int[]{0x02, 0x06, 0x35, 0x30, 0x30, 0x30, 0x30, 0x00};
+        ScaleCommand cmd = new CmdSetScaleGoodsType(
+                new Param.Password("0000".toCharArray()),
+                new Param.GoodsType(0)
+        );
+        assertArrayEquals("set weight type",cmd.cmdAsIntArray(), correctCmd);
+
+        correctCmd = new int[]{0x02, 0x06, 0x35, 0x30, 0x30, 0x30, 0x30, 0x01};
+        cmd = new CmdSetScaleGoodsType(
+                new Param.Password("0000".toCharArray()),
+                new Param.GoodsType(1)
+        );
+        assertArrayEquals("set piece type",cmd.cmdAsIntArray(), correctCmd);
+
+        try {
+            new Param.GoodsType(12);
+            assertTrue("must be exception", false);
+        } catch (IncorrectParamValue ex) {
+            assertTrue(true);
+        }
+    }
 }
