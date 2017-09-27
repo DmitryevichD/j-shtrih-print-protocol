@@ -242,4 +242,21 @@ public abstract class Param{
             super(new SType(tare, 2), "Задать тару");
         }
     }
+
+    /**
+     *  Цена (4 байта), в МДЕ, диапазон: 0..999999
+     */
+    public static class Price extends Param {
+        private final int minMDE = 0;
+        private final int maxMDE = 999999;
+
+        public Price(int price) throws IncorrectParamValue{
+            super("Установить цену");
+            if(price >= minMDE || price <= maxMDE){
+                super.setParam(new SType(price, 4));
+            }else {
+                new IncorrectParamValue("Price value " + price + ", must be " + minMDE + ".." + maxMDE);
+            }
+        }
+    }
 }
