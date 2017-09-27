@@ -296,4 +296,16 @@ public abstract class Param{
             }
         }
     }
+
+    /**
+     * Установить / сбросить признак подсчета валютного эквивалента
+     */
+    public static class EnCurrEquiv extends Param{
+        /**
+         * @param isEnabled диапазон: false – сбросить, true - установить
+         */
+        public EnCurrEquiv(boolean isEnabled){
+            super(new SType(isEnabled), "Установить / сбросить признак подсчета валютного эквивалента");
+        }
+    }
 }

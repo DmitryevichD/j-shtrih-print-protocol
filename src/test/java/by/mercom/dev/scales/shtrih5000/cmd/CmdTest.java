@@ -394,4 +394,21 @@ public class CmdTest {
             assertTrue(true);
         }
     }
+
+    @Test
+    public void ScaleCmdSetScaleCurrEquivModeTest() throws Exception{
+        int[] correctCmd = new int[]{0x02, 0x06, 0x36, 0x30, 0x30, 0x30, 0x30, 0x01};
+        ScaleCommand cmd = new CmdSetScaleCurrEquivMode(
+                new Param.Password("0000".toCharArray()),
+                new Param.EnCurrEquiv(true)
+        );
+        assertArrayEquals("enable equiv mode",cmd.cmdAsIntArray(), correctCmd);
+
+        correctCmd = new int[]{0x02, 0x06, 0x36, 0x30, 0x30, 0x30, 0x30, 0x00};
+        cmd = new CmdSetScaleCurrEquivMode(
+                new Param.Password("0000".toCharArray()),
+                new Param.EnCurrEquiv(false)
+        );
+        assertArrayEquals("disable equiv mode",cmd.cmdAsIntArray(), correctCmd);
+    }
 }
