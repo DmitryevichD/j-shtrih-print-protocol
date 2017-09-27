@@ -346,4 +346,14 @@ public class CmdTest {
         assertArrayEquals("set price",cmd.cmdAsIntArray(), correctCmd);
     }
 
+    @Test
+    public void ScaleSetQuantityTest() throws Exception{
+        int[] correctCmd = new int[]{0x02, 0x06, 0x34, 0x30, 0x30, 0x30, 0x30, 0x20};
+        ScaleCommand cmd = new CmdSetScaleQuantity(
+                new Param.Password("0000".toCharArray()),
+                new Param.Quantity(32)
+        );
+        assertArrayEquals("set quantity",cmd.cmdAsIntArray(), correctCmd);
+    }
+
 }

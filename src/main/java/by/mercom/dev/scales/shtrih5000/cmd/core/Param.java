@@ -2,10 +2,6 @@ package by.mercom.dev.scales.shtrih5000.cmd.core;
 
 import by.mercom.dev.scales.shtrih5000.scaleException.IncorrectParamValue;
 
-import javax.swing.text.Style;
-import java.security.InvalidParameterException;
-import java.text.DateFormat;
-import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -247,15 +243,32 @@ public abstract class Param{
      *  Цена (4 байта), в МДЕ, диапазон: 0..999999
      */
     public static class Price extends Param {
-        private final int minMDE = 0;
-        private final int maxMDE = 999999;
+        private final int minVal = 0;
+        private final int maxVal = 999999;
 
         public Price(int price) throws IncorrectParamValue{
             super("Установить цену");
-            if(price >= minMDE || price <= maxMDE){
+            if(price >= minVal || price <= maxVal){
                 super.setParam(new SType(price, 4));
             }else {
-                new IncorrectParamValue("Price value " + price + ", must be " + minMDE + ".." + maxMDE);
+                new IncorrectParamValue("Price value " + price + ", must be " + minVal + ".." + maxVal);
+            }
+        }
+    }
+
+    /**
+     * Количество (1 байт), диапазон: 0..99
+     */
+    public static class Quantity extends Param{
+        private final int minVal = 0;
+        private final int maxVal = 99;
+
+        public Quantity(int quantity) throws IncorrectParamValue{
+            super("Установить количество");
+            if(quantity >= minVal || quantity <= maxVal){
+                super.setParam(new SType(quantity, 1));
+            }else {
+                new IncorrectParamValue("Price value " + quantity + ", must be " + minVal + ".." + maxVal);
             }
         }
     }
