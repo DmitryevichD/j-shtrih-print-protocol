@@ -435,4 +435,13 @@ public class CmdTest {
             assertTrue(true);
         }
     }
+
+    @Test
+    public void ScaleCmdGetScaleWeightTest() throws Exception{
+        int[] correctCmd = new int[]{0x02, 0x05, 0x38, 0x30, 0x30, 0x30, 0x30};
+        ScaleCommand cmd = new CmdGetScaleWeight(
+                new Param.Password("0000".toCharArray())
+        );
+        assertArrayEquals("get scale weight",cmd.cmdAsIntArray(), correctCmd);
+    }
 }
