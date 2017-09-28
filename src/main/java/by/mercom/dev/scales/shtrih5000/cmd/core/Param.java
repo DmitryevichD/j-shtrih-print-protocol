@@ -308,4 +308,21 @@ public abstract class Param{
             super(new SType(isEnabled), "Установить / сбросить признак подсчета валютного эквивалента");
         }
     }
+
+    /**
+     * Номер товара (2 байта)
+     */
+    public static class GoodItem extends Param {
+        private final int minVal = 0;
+        private final int maxVal = 65535;
+
+        public GoodItem(int goodItem) throws IncorrectParamValue{
+            super("Номер товара");
+            if(goodItem >= minVal && goodItem <= maxVal){
+                super.setParam(new SType(goodItem, 2));
+            }else{
+                throw new IncorrectParamValue("Goods item value " + goodItem + ", must be " + minVal + ".." + maxVal);
+            }
+        }
+    }
 }

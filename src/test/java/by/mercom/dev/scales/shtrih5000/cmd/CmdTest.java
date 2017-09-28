@@ -411,4 +411,28 @@ public class CmdTest {
         );
         assertArrayEquals("disable equiv mode",cmd.cmdAsIntArray(), correctCmd);
     }
+
+    @Test
+    public void ScaleCmdSetScaleGoodItemTest() throws Exception{
+        int[] correctCmd = new int[]{0x02, 0x07, 0x37, 0x30, 0x30, 0x30, 0x30, 0x00, 0x00};
+        ScaleCommand cmd = new CmdSetScaleGoodItem(
+                new Param.Password("0000".toCharArray()),
+                new Param.GoodItem(0)
+        );
+        assertArrayEquals("reset good item",cmd.cmdAsIntArray(), correctCmd);
+
+        correctCmd = new int[]{0x02, 0x07, 0x37, 0x30, 0x30, 0x30, 0x30, 0x7D, 0x0D};
+        cmd = new CmdSetScaleGoodItem(
+                new Param.Password("0000".toCharArray()),
+                new Param.GoodItem(3453)
+        );
+        assertArrayEquals("set good item",cmd.cmdAsIntArray(), correctCmd);
+
+        try {
+            new Param.GoodItem(-232);
+            assertTrue("must be exception", false);
+        } catch (IncorrectParamValue ex) {
+            assertTrue(true);
+        }
+    }
 }
