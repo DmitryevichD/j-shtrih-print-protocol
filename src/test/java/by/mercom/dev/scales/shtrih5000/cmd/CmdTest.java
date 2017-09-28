@@ -498,4 +498,13 @@ public class CmdTest {
         );
         assertArrayEquals("print copy label",cmd.cmdAsIntArray(), correctCmd);
     }
+
+    @Test
+    public void ScaleCmdScalePrintTestLabelTest() throws Exception{
+        int[] correctCmd = new int[]{0x02, 0x05, 0x44, 0x30, 0x30, 0x30, 0x30};
+        ScaleCommand cmd = new CmdScalePrintTestLabel(
+                new Param.Password("0000".toCharArray())
+        );
+        assertArrayEquals("print test label",cmd.cmdAsIntArray(), correctCmd);
+    }
 }
