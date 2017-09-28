@@ -453,4 +453,13 @@ public class CmdTest {
         );
         assertArrayEquals("get scale display data",cmd.cmdAsIntArray(), correctCmd);
     }
+
+    @Test
+    public void ScaleCmdGetScaleWeightDeviceStatusTest() throws Exception{
+        int[] correctCmd = new int[]{0x02, 0x05, 0x3A, 0x30, 0x30, 0x30, 0x30};
+        ScaleCommand cmd = new CmdGetScaleWeightDeviceStatus(
+                new Param.Password("0000".toCharArray())
+        );
+        assertArrayEquals("get scale weight device status",cmd.cmdAsIntArray(), correctCmd);
+    }
 }
