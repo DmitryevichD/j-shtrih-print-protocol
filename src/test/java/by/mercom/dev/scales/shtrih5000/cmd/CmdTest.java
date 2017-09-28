@@ -480,4 +480,13 @@ public class CmdTest {
         );
         assertArrayEquals("print label",cmd.cmdAsIntArray(), correctCmd);
     }
+
+    @Test
+    public void ScaleCmdScalePrintTotalLabelTest() throws Exception{
+        int[] correctCmd = new int[]{0x02, 0x05, 0x42, 0x30, 0x30, 0x30, 0x30};
+        ScaleCommand cmd = new CmdScalePrintTotalLabel(
+                new Param.Password("0000".toCharArray())
+        );
+        assertArrayEquals("print total label",cmd.cmdAsIntArray(), correctCmd);
+    }
 }
