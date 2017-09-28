@@ -462,4 +462,13 @@ public class CmdTest {
         );
         assertArrayEquals("get scale weight device status",cmd.cmdAsIntArray(), correctCmd);
     }
+
+    @Test
+    public void ScalCmdScaleFeedDocumentTest() throws Exception{
+        int[] correctCmd = new int[]{0x02, 0x05, 0x40, 0x30, 0x30, 0x30, 0x30};
+        ScaleCommand cmd = new CmdScaleFeedDocument(
+                new Param.Password("0000".toCharArray())
+        );
+        assertArrayEquals("feed document",cmd.cmdAsIntArray(), correctCmd);
+    }
 }
