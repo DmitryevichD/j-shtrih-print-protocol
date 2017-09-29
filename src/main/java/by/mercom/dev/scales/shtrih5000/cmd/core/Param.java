@@ -143,20 +143,18 @@ public abstract class Param{
     }
 
     /**
-     * Устанавливает режим печати
+     * Параметр режима печати
+     * Размер (1 байт);
+     * диапазон: 0..2
+     * 0 – нет, 1 – разрешена, 2 - автопечать
      */
     public static class PrintMode extends Param{
-        /**
-         *
-         * @param printMode 0 – нет, 1 – разрешена, 2 - автопечать
-         * @throws IncorrectParamValue - неверное значение параметра
-         */
         public PrintMode(int printMode) throws IncorrectParamValue {
             super("Режим печати");
             if (printMode >= 0 || printMode <= 3) {
                 super.setParam(new SType(printMode));
             }else {
-                new IncorrectParamValue("WeightLimit. Current value=" + printMode + ", must be 0..2");
+                new IncorrectParamValue("Print mode. Current value=" + printMode + ", must be 0..2");
             }
         }
     }
@@ -327,8 +325,10 @@ public abstract class Param{
     }
 
     /**
-     * Смещение печати (1 байт) диапазон: 0..7
-     * соответствует смещению печати 0..-7 соответственно (единица смещения равна 0.125 мм)
+     * Смещение печати
+     * Размер (1 байт)
+     * Диапазон: 0..7
+     * Соответствует смещению печати 0..-7 соответственно (единица смещения равна 0.125 мм)
      */
     public static class Offset extends Param{
         private final int minVal = 0;
@@ -345,8 +345,10 @@ public abstract class Param{
     }
 
     /**
-     * Яркость печати (1 байт) диапазон: 0, 1..8..15
-     * соответствует якрости НОРМ,МИН..НОРМ..МАКС соответственно
+     * Параметр яркости печати
+     * Размер (1 байт)
+     * Диапазон: 0, 1..8..15
+     * Соответствует якрости НОРМ,МИН..НОРМ..МАКС соответственно
      * */
 
     public static class Brightness extends Param {

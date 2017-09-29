@@ -4,6 +4,7 @@ package by.mercom.dev.scales.shtrih5000.cmd;
 import by.mercom.dev.scales.shtrih5000.cmd.core.Param;
 import by.mercom.dev.scales.shtrih5000.cmd.core.ScaleCommand;
 import by.mercom.dev.scales.shtrih5000.cmd.core.ScaleKeyboard;
+import by.mercom.dev.scales.shtrih5000.cmd.print.*;
 import by.mercom.dev.scales.shtrih5000.scaleException.IncorrectParamValue;
 import org.junit.Test;
 
@@ -214,21 +215,21 @@ public class CmdTest {
     @Test
     public void ScaleSetPrintModeTest() throws Exception{
         int[] correctCmd = new int[]{0x02, 0x06, 0x27, 0x30, 0x30, 0x30, 0x30, 0x00};
-        ScaleCommand cmd = new CmdSetPrintMode(
+        ScaleCommand cmd = new Mode(
                 new Param.Password("0000".toCharArray()),
                 new Param.PrintMode(0)
         );
         assertArrayEquals(cmd.cmdAsIntArray(), correctCmd);
 
         correctCmd = new int[]{0x02, 0x06, 0x27, 0x30, 0x30, 0x30, 0x30, 0x01};
-        cmd = new CmdSetPrintMode(
+        cmd = new Mode(
                 new Param.Password("0000".toCharArray()),
                 new Param.PrintMode(1)
         );
         assertArrayEquals(cmd.cmdAsIntArray(), correctCmd);
 
         correctCmd = new int[]{0x02, 0x06, 0x27, 0x30, 0x30, 0x30, 0x30, 0x02};
-        cmd = new CmdSetPrintMode(
+        cmd = new Mode(
                 new Param.Password("0000".toCharArray()),
                 new Param.PrintMode(2)
         );
@@ -238,7 +239,7 @@ public class CmdTest {
     @Test
     public void ScaleSetAutoPrintWeightTest() throws Exception{
         int[] correctCmd = new int[]{0x02, 0x07, 0x28, 0x30, 0x30, 0x30, 0x30, 0x19, 0x00};
-        ScaleCommand cmd = new CmdSetAutoPrintWeight(
+        ScaleCommand cmd = new AutoPrintLabel(
                 new Param.Password("0000".toCharArray()),
                 new Param.WeightLimit(25)
         );
@@ -475,7 +476,7 @@ public class CmdTest {
     @Test
     public void ScaleCmdScalePrintLabelTest() throws Exception{
         int[] correctCmd = new int[]{0x02, 0x05, 0x41, 0x30, 0x30, 0x30, 0x30};
-        ScaleCommand cmd = new CmdScalePrintLabel(
+        ScaleCommand cmd = new PrintLabel(
                 new Param.Password("0000".toCharArray())
         );
         assertArrayEquals("print label",cmd.cmdAsIntArray(), correctCmd);
@@ -484,7 +485,7 @@ public class CmdTest {
     @Test
     public void ScaleCmdScalePrintTotalLabelTest() throws Exception{
         int[] correctCmd = new int[]{0x02, 0x05, 0x42, 0x30, 0x30, 0x30, 0x30};
-        ScaleCommand cmd = new CmdScalePrintTotalLabel(
+        ScaleCommand cmd = new PrintTotalLabel(
                 new Param.Password("0000".toCharArray())
         );
         assertArrayEquals("print total label",cmd.cmdAsIntArray(), correctCmd);
@@ -493,7 +494,7 @@ public class CmdTest {
     @Test
     public void ScaleCmdScalePrintCopyTest() throws Exception{
         int[] correctCmd = new int[]{0x02, 0x05, 0x43, 0x30, 0x30, 0x30, 0x30};
-        ScaleCommand cmd = new CmdScalePrintCopy(
+        ScaleCommand cmd = new PrintCopyLabel(
                 new Param.Password("0000".toCharArray())
         );
         assertArrayEquals("print copy label",cmd.cmdAsIntArray(), correctCmd);
@@ -502,7 +503,7 @@ public class CmdTest {
     @Test
     public void ScaleCmdScalePrintTestLabelTest() throws Exception{
         int[] correctCmd = new int[]{0x02, 0x05, 0x44, 0x30, 0x30, 0x30, 0x30};
-        ScaleCommand cmd = new CmdScalePrintTestLabel(
+        ScaleCommand cmd = new PrintTest(
                 new Param.Password("0000".toCharArray())
         );
         assertArrayEquals("print test label",cmd.cmdAsIntArray(), correctCmd);
@@ -511,14 +512,14 @@ public class CmdTest {
     @Test
     public void ScaleCmdScalePrintCashReportTest() throws Exception{
         int[] correctCmd = new int[]{0x02, 0x07, 0x45, 0x30, 0x30, 0x30, 0x30, 0x01, 0x00};
-        ScaleCommand cmd = new CmdScalePrintCashReport(
+        ScaleCommand cmd = new PrintCashReport(
                 new Param.Password("0000".toCharArray()),
                 new Param.GoodItem(1)
         );
         assertArrayEquals("print cash report by good item",cmd.cmdAsIntArray(), correctCmd);
 
         correctCmd = new int[]{0x02, 0x07, 0x45, 0x30, 0x30, 0x30, 0x30, 0x00, 0x00};
-        cmd = new CmdScalePrintCashReport(
+        cmd = new PrintCashReport(
                 new Param.Password("0000".toCharArray())
         );
         assertArrayEquals("print cash report by all good item",cmd.cmdAsIntArray(), correctCmd);
@@ -527,13 +528,13 @@ public class CmdTest {
     @Test
     public void ScaleCmdScalePrintOffsetTest() throws Exception{
         int[] correctCmd = new int[]{0x02, 0x05, 0x46, 0x30, 0x30, 0x30, 0x30};
-        ScaleCommand cmd = new CmdScalePrintOffset(
+        ScaleCommand cmd = new Offset(
                 new Param.Password("0000".toCharArray())
         );
         assertArrayEquals("get print offset", cmd.cmdAsIntArray(), correctCmd);
 
         correctCmd = new int[]{0x02, 0x06, 0x47, 0x30, 0x30, 0x30, 0x30, 0x04};
-        cmd = new CmdScalePrintOffset(
+        cmd = new Offset(
                 new Param.Password("0000".toCharArray()),
                 new Param.Offset(4)
         );
@@ -550,13 +551,13 @@ public class CmdTest {
     @Test
     public void ScaleCmdScaleBrightnessTest() throws Exception{
         int[] correctCmd = new int[]{0x02, 0x05, 0x48, 0x30, 0x30, 0x30, 0x30};
-        ScaleCommand cmd = new CmdScaleBrightness(
+        ScaleCommand cmd = new Brightness(
                 new Param.Password("0000".toCharArray())
         );
         assertArrayEquals("get brightness", cmd.cmdAsIntArray(), correctCmd);
 
         correctCmd = new int[]{0x02, 0x06, 0x49, 0x30, 0x30, 0x30, 0x30, 0x03};
-        cmd = new CmdScaleBrightness(
+        cmd = new Brightness(
                 new Param.Password("0000".toCharArray()),
                 new Param.Brightness(3)
         );
@@ -573,7 +574,7 @@ public class CmdTest {
     @Test
     public void ScaleCmdGetScalePrinterStatusTest() throws Exception{
         int[] correctCmd = new int[]{0x02, 0x05, 0x4A, 0x30, 0x30, 0x30, 0x30};
-        ScaleCommand cmd = new CmdGetScalePrinterStatus(
+        ScaleCommand cmd = new CurrentStatus(
                 new Param.Password("0000".toCharArray())
         );
         assertArrayEquals("getting printer status",cmd.cmdAsIntArray(), correctCmd);

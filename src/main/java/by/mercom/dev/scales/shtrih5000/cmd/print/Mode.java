@@ -1,18 +1,19 @@
-package by.mercom.dev.scales.shtrih5000.cmd;
+package by.mercom.dev.scales.shtrih5000.cmd.print;
 
 import by.mercom.dev.scales.shtrih5000.cmd.core.Param;
 import by.mercom.dev.scales.shtrih5000.cmd.core.ScaleCommand;
 
 /**
- * Команда изменения режима печати
+ * Работа с режимом печати
  */
-public class CmdSetPrintMode extends ScaleCommand{
+public class Mode extends ScaleCommand{
 
     /**
+     * Создает комманду для установки текущего режима печати
      * @param pwd - Пароль администратора
      * @param printMode Режим печати
      */
-    public CmdSetPrintMode(Param.Password pwd, Param.PrintMode printMode) {
+    public Mode(Param.Password pwd, Param.PrintMode printMode) {
         super(0x27, 6, new Param[]{pwd, printMode}, false);
     }
 }
