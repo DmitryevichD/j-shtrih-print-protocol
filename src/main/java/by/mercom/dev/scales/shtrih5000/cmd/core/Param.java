@@ -325,4 +325,22 @@ public abstract class Param{
             }
         }
     }
+
+    /**
+     * Смещение печати (1 байт) диапазон: 0..7
+     * соответствует смещению печати 0..-7 соответственно (единица смещения равна 0.125 мм)
+     */
+    public static class Offset extends Param{
+        private final int minVal = 0;
+        private final int maxVal = 7;
+
+        public Offset(int offset) throws IncorrectParamValue{
+            super("Смещение печати");
+            if(offset >= minVal && offset <= maxVal){
+                super.setParam(new SType(offset, 1));
+            }else{
+                throw new IncorrectParamValue("Print offset" + offset + ", must be " + minVal + ".." + maxVal);
+            }
+        }
+    }
 }

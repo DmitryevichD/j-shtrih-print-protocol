@@ -522,7 +522,28 @@ public class CmdTest {
                 new Param.Password("0000".toCharArray())
         );
         assertArrayEquals("print cash report by all good item",cmd.cmdAsIntArray(), correctCmd);
+    }
 
+    @Test
+    public void ScaleCmdScalePrintOffsetTest() throws Exception{
+        int[] correctCmd = new int[]{0x02, 0x05, 0x46, 0x30, 0x30, 0x30, 0x30};
+        ScaleCommand cmd = new CmdScalePrintOffset(
+                new Param.Password("0000".toCharArray())
+        );
+        assertArrayEquals("set print offset", cmd.cmdAsIntArray(), correctCmd);
 
+        correctCmd = new int[]{0x02, 0x06, 0x47, 0x30, 0x30, 0x30, 0x30, 0x04};
+        cmd = new CmdScalePrintOffset(
+                new Param.Password("0000".toCharArray()),
+                new Param.Offset(4)
+        );
+        assertArrayEquals("set print offset", cmd.cmdAsIntArray(), correctCmd);
+
+        try {
+            new Param.Offset(10);
+            assertTrue("set print offset", false);
+        } catch (IncorrectParamValue ex) {
+            assertTrue(true);
+        }
     }
 }
