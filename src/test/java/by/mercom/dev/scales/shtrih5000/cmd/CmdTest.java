@@ -569,4 +569,13 @@ public class CmdTest {
             assertTrue(true);
         }
     }
+
+    @Test
+    public void ScaleCmdGetScalePrinterStatusTest() throws Exception{
+        int[] correctCmd = new int[]{0x02, 0x05, 0x4A, 0x30, 0x30, 0x30, 0x30};
+        ScaleCommand cmd = new CmdGetScalePrinterStatus(
+                new Param.Password("0000".toCharArray())
+        );
+        assertArrayEquals("getting printer status",cmd.cmdAsIntArray(), correctCmd);
+    }
 }
