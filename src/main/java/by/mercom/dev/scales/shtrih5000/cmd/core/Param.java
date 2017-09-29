@@ -343,4 +343,23 @@ public abstract class Param{
             }
         }
     }
+
+    /**
+     * Яркость печати (1 байт) диапазон: 0, 1..8..15
+     * соответствует якрости НОРМ,МИН..НОРМ..МАКС соответственно
+     * */
+
+    public static class Brightness extends Param {
+        private final int minVal = 0;
+        private final int maxVal = 15;
+
+        public Brightness(int brightness) throws IncorrectParamValue {
+            super("Яркость печати");
+            if(brightness >= minVal && brightness <= maxVal){
+                super.setParam(new SType(brightness, 1));
+            }else{
+                throw new IncorrectParamValue("Brightness" + brightness + ", must be " + minVal + ".." + maxVal);
+            }
+        }
+    }
 }

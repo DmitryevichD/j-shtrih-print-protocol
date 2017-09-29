@@ -530,7 +530,7 @@ public class CmdTest {
         ScaleCommand cmd = new CmdScalePrintOffset(
                 new Param.Password("0000".toCharArray())
         );
-        assertArrayEquals("set print offset", cmd.cmdAsIntArray(), correctCmd);
+        assertArrayEquals("get print offset", cmd.cmdAsIntArray(), correctCmd);
 
         correctCmd = new int[]{0x02, 0x06, 0x47, 0x30, 0x30, 0x30, 0x30, 0x04};
         cmd = new CmdScalePrintOffset(
@@ -542,6 +542,29 @@ public class CmdTest {
         try {
             new Param.Offset(10);
             assertTrue("set print offset", false);
+        } catch (IncorrectParamValue ex) {
+            assertTrue(true);
+        }
+    }
+
+    @Test
+    public void ScaleCmdScaleBrightnessTest() throws Exception{
+        int[] correctCmd = new int[]{0x02, 0x05, 0x48, 0x30, 0x30, 0x30, 0x30};
+        ScaleCommand cmd = new CmdScaleBrightness(
+                new Param.Password("0000".toCharArray())
+        );
+        assertArrayEquals("get brightness", cmd.cmdAsIntArray(), correctCmd);
+
+        correctCmd = new int[]{0x02, 0x06, 0x49, 0x30, 0x30, 0x30, 0x30, 0x03};
+        cmd = new CmdScaleBrightness(
+                new Param.Password("0000".toCharArray()),
+                new Param.Brightness(3)
+        );
+        assertArrayEquals("set brightness", cmd.cmdAsIntArray(), correctCmd);
+
+        try {
+            new Param.Brightness(18);
+            assertTrue("set brightness", false);
         } catch (IncorrectParamValue ex) {
             assertTrue(true);
         }
