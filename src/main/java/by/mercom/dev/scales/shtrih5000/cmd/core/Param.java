@@ -362,4 +362,24 @@ public abstract class Param{
             }
         }
     }
+
+    /**
+     * Настройка подмотчика (1 байт), диапазон: 0..2
+     * 0 - выключен
+     * 1 - обычная подмотка
+     * 2 - усиленный подмотчик
+     */
+    public static class UnderwinderMode extends Param{
+        private final int minVal = 0;
+        private final int maxVal = 2;
+
+        public UnderwinderMode(int underwinderMode) throws IncorrectParamValue {
+            super("Настройки подмотчика");
+            if(underwinderMode >= minVal && underwinderMode <= maxVal){
+                super.setParam(new SType(underwinderMode, 1));
+            }else{
+                throw new IncorrectParamValue("UnderwinderMode" + underwinderMode + ", must be " + minVal + ".." + maxVal);
+            }
+        }
+    }
 }

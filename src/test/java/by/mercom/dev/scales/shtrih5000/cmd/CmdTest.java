@@ -578,4 +578,41 @@ public class CmdTest {
         );
         assertArrayEquals("getting printer status",cmd.cmdAsIntArray(), correctCmd);
     }
+
+    @Test
+    public void ScaleCmdScaleUnderwinerModeTest() throws Exception{
+        int[] correctCmd = new int[]{0x02, 0x05, 0x4B, 0x30, 0x30, 0x30, 0x30};
+        ScaleCommand cmd = new CmdScaleUnderwinerMode(
+                new Param.Password("0000".toCharArray())
+        );
+        assertArrayEquals("get underwinder mode", cmd.cmdAsIntArray(), correctCmd);
+
+        correctCmd = new int[]{0x02, 0x06, 0x4C, 0x30, 0x30, 0x30, 0x30, 0x00};
+        cmd = new CmdScaleUnderwinerMode(
+                new Param.Password("0000".toCharArray()),
+                new Param.UnderwinderMode(0)
+        );
+        assertArrayEquals("disable underwinder mode", cmd.cmdAsIntArray(), correctCmd);
+
+        correctCmd = new int[]{0x02, 0x06, 0x4C, 0x30, 0x30, 0x30, 0x30, 0x01};
+        cmd = new CmdScaleUnderwinerMode(
+                new Param.Password("0000".toCharArray()),
+                new Param.UnderwinderMode(1)
+        );
+        assertArrayEquals("normal underwinder mode", cmd.cmdAsIntArray(), correctCmd);
+
+        correctCmd = new int[]{0x02, 0x06, 0x4C, 0x30, 0x30, 0x30, 0x30, 0x02};
+        cmd = new CmdScaleUnderwinerMode(
+                new Param.Password("0000".toCharArray()),
+                new Param.UnderwinderMode(2)
+        );
+        assertArrayEquals("strengthened underwinder mode", cmd.cmdAsIntArray(), correctCmd);
+
+        try {
+            new Param.UnderwinderMode(3);
+            assertTrue("exception underwinder mode", false);
+        } catch (IncorrectParamValue ex) {
+            assertTrue(true);
+        }
+    }
 }
