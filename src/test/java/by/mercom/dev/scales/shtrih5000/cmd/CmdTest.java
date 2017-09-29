@@ -507,4 +507,22 @@ public class CmdTest {
         );
         assertArrayEquals("print test label",cmd.cmdAsIntArray(), correctCmd);
     }
+
+    @Test
+    public void ScaleCmdScalePrintCashReportTest() throws Exception{
+        int[] correctCmd = new int[]{0x02, 0x07, 0x45, 0x30, 0x30, 0x30, 0x30, 0x01, 0x00};
+        ScaleCommand cmd = new CmdScalePrintCashReport(
+                new Param.Password("0000".toCharArray()),
+                new Param.GoodItem(1)
+        );
+        assertArrayEquals("print cash report by good item",cmd.cmdAsIntArray(), correctCmd);
+
+        correctCmd = new int[]{0x02, 0x07, 0x45, 0x30, 0x30, 0x30, 0x30, 0x00, 0x00};
+        cmd = new CmdScalePrintCashReport(
+                new Param.Password("0000".toCharArray())
+        );
+        assertArrayEquals("print cash report by all good item",cmd.cmdAsIntArray(), correctCmd);
+
+
+    }
 }
