@@ -1,9 +1,11 @@
 package by.mercom.dev.scales.shtrih5000.cmd.core;
 
+import java.io.UnsupportedEncodingException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.sql.Time;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Date;
 
 /**
@@ -76,6 +78,22 @@ public class SType {
     public SType(boolean boolVal) {
         value = new byte[1];
         value[0] = boolVal ? (byte)1 : (byte)0;
+    }
+
+    public SType(String str, int countByte){
+        value = new byte[countByte];
+        try {
+            byte[] bString = str.getBytes("CP1251");
+            System.arraycopy(bString,
+                    0,
+                    value,
+                    0,
+                    bString.length <= countByte ? bString.length : countByte);
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+
     }
 
     public SType(byte[] byteArray) {

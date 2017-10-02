@@ -616,4 +616,9 @@ public class CmdTest {
             assertTrue(true);
         }
     }
+
+    @Test
+    public void ScaleCmdSetDataToPLUTest() throws Exception{
+        //todo : test for sending data to scale
+    }
 }

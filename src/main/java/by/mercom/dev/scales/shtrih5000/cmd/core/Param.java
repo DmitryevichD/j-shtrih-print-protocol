@@ -18,6 +18,20 @@ public abstract class Param{
         this.description = description;
     }
 
+    public Param(Object curVal, String description, Object minVal, Object maxVal, int countByte) throws IncorrectParamValue{
+        if (curVal instanceof Integer) {
+            if((Integer)curVal >= (Integer)minVal && (Integer)curVal <= (Integer)maxVal){
+                this.stype = new SType((Integer) curVal, countByte);
+                this.description = description;
+            }else {
+                throw new IncorrectParamValue("Current value=" + curVal + ", must be " + minVal + ".." + maxVal);
+            }
+        }else {
+            throw new IllegalArgumentException();
+        }
+    }
+
+
     public Param(String description){
         this.description = description;
     }
@@ -382,6 +396,71 @@ public abstract class Param{
             }else{
                 throw new IncorrectParamValue("UnderwinderMode" + underwinderMode + ", must be " + minVal + ".." + maxVal);
             }
+        }
+    }
+
+    /**
+     * Код товара (4 байта),
+     * диапазон: 1..999999
+     */
+    public static class GoodCode extends Param {
+        public GoodCode(int code) throws IncorrectParamValue{
+            super(code, "КодТовара", 1, 999999, 4);
+        }
+    }
+
+    public static class GoodName extends Param{
+        public GoodName(String name) throws IncorrectParamValue{
+            super(new SType(name, 28), "Наименование");
+        }
+    }
+
+    /**
+     * Срок годности (2 байта),
+     * в днях, диапазон: 0..9999
+     */
+    public static class GoodShelfLife extends Param{
+        public GoodShelfLife(int countDay) throws IncorrectParamValue{
+            super(countDay, "Срок годности в днях", 0, 9999, 2);
+        }
+    }
+
+    /**
+     * Групповой код (2 байта),
+     * диапазон: 0..9999
+     */
+    public static class GoodGroupCode extends Param{
+        public GoodGroupCode(int groupCode) throws IncorrectParamValue{
+            super(groupCode, "Групповой код", 0, 9999, 2);
+        }
+    }
+
+    /**
+     * Номер сообщения (2 байта),
+     * диапазон: 0(нет сообщений),1..[Размер таблицы сообщений]
+     */
+    public static class MsgNumber  extends Param {
+        public MsgNumber(int number) throws IncorrectParamValue {
+            super(number, "Номер сообщения", 0, 65535, 2);
+        }
+    }
+
+    /**
+     * Номер граф. изображения (1 байт), диапазон: 0 – нет изображения, 1..2.
+     */
+    public static class PictureNumber extends Param {
+        public PictureNumber(int number) throws IncorrectParamValue {
+            super(number, "Номер граф. изображения", 1, 2, 1);
+        }
+    }
+
+    /**
+     * Код РОСТЕСТ (4 байта), символы ASCII
+     * (код органа РОСТЕСТ, выдавшего сертификат соответствия)
+     */
+    public static class Rostest extends Param {
+        public Rostest(String rostestCode) throws IncorrectParamValue {
+            super(new SType(rostestCode, 4), "Наименование");
         }
     }
 }

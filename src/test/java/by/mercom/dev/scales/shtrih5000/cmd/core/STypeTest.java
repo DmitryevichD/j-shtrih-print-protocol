@@ -89,4 +89,18 @@ public class STypeTest {
         }
     }
 
+    @Test
+    public void convertStringToByteArrayTest() throws Exception{
+        Map<String, Byte[]> answers = new HashMap<String, Byte[]>();
+        answers.put("ТОВАР 1", new Byte[]{(byte)0xD2, (byte)0xCE, (byte)0xC2, (byte)0xC0,(byte) 0xD0, (byte)0x20, (byte)0x31});
+        answers.put(" ", new Byte[]{(byte)0x20});
+        answers.put("Тест .,№", new Byte[]{(byte)0xD2, (byte)0xE5, (byte)0xF1, (byte)0xF2,(byte) 0x20, (byte)0x2E, (byte)0x2C,(byte)0xB9});
+
+        for (Map.Entry<String, Byte[]> answer : answers.entrySet()) {
+            assertArrayEquals("Invalid convert " + answer.getKey(),
+                    ArrayUtils.toPrimitive(answer.getValue()),
+                    new SType(answer.getKey(), answer.getKey().length()).asByteArray());
+        }
+    }
+
 }
